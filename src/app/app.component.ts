@@ -13,13 +13,9 @@ export class AppComponent implements OnInit {
     console.log(`navigate to: ${this.navigateTo}`);
   }
 
-  showRecipes() {
-    return this.navigateTo === 'recipes';
-  }
-
-  onNavigate(menu: string) {
-    console.log(`navigate to: ${menu}`);
-    this.navigateTo = menu;
+  onNavigate(feature: string) {
+    console.log(`navigate to: ${feature}`);
+    this.navigateTo = feature;
   }
  
 }
