@@ -5,7 +5,11 @@ export class ShoppingListService {
 
   ingredientsChanged = new EventEmitter<Ingredient[]>();
 
-  private ingredients: Ingredient[] = [];
+  // ingredients: Ingredient[] = [];
+  ingredients: Ingredient[] = [
+    new Ingredient('Apples', 5),
+    new Ingredient('Tomatos', 10),
+  ];
 
   constructor() {
   }
