@@ -7,15 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  navigateTo = 'recipes';
+  // navigateTo = 'recipes';
 
   ngOnInit(): void {
-    console.log(`navigate to: ${this.navigateTo}`);
+    // console.log(`navigate to: ${this.navigateTo}`);
   }
 
-  onNavigate(feature: string) {
-    console.log(`navigate to: ${feature}`);
-    this.navigateTo = feature;
-  }
+  // onNavigate(feature: string) {
+  //   console.log(`navigate to: ${feature}`);
+  //   this.navigateTo = feature;
+  // }
  
 }
