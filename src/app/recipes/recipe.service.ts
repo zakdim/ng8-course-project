@@ -24,7 +24,16 @@ export class RecipeService {
       [
         new Ingredient('Buns', 2),
         new Ingredient('Meat', 1)
-      ]) 
+      ]),
+      // new Recipe(
+      //   'Spaghetti!',
+      //   'Very Tasteful!',
+      //   'https://upload.wikimedia.org/wikipedia/commons/2/2a/Spaghetti_al_Pomodoro.JPG',
+      //   [
+      //     new Ingredient('Spaghetti', 100),
+      //     new Ingredient('Tomatoes', 3)
+      //   ]
+      // )
   ];
 
   constructor(private slService: ShoppingListService) { }
@@ -48,6 +57,11 @@ export class RecipeService {
 
   updateRecipe(index: number, newRecipe: Recipe) {
     this.recipes[index] = newRecipe;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
     this.recipesChanged.next(this.recipes.slice());
   }
 }
