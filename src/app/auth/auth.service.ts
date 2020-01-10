@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 
@@ -21,34 +21,47 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   signup(email: string, password: string) {
-    return this.http.post<AuthResponseData>(
-      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCdsXeBkkKcpXmNQRHoui2L97xt1BZaUXQ',
-      {
-        email: email,
-        password: password,
-        returnSecureToken: true
-      }
-    ).pipe(catchError(errorRes => {
-      let errorMessage = 'An unknown error occurred!';
-      if (!errorRes.error || !errorRes.error.error) {
-        return throwError(errorMessage);
-      }
-      switch (errorRes.error.error.message) {
-        case 'EMAIL_EXISTS':
-          errorMessage = 'The email address is already in use by another account';
-      }
-      return throwError(errorMessage);
-    }));
+    return this.http
+      .post<AuthResponseData>(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCdsXeBkkKcpXmNQRHoui2L97xt1BZaUXQ',
+       {
+         email: email,
+          password: password,
+         returnSecureToken: true
+       }
+      )
+     .pipe(catchError(this.handleError));
   }
 
-  login(email: string, password: string): Observable<AuthResponseData>{
-    return this.http.post<AuthResponseData>(
-      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCdsXeBkkKcpXmNQRHoui2L97xt1BZaUXQ',
-      {
-        email: email,
-        password: password,
-        returnSecureToken: true
-      }
-    );
+  login(email: string, password: string): Observable<AuthResponseData> {
+    return this.http
+      .post<AuthResponseData>(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCdsXeBkkKcpXmNQRHoui2L97xt1BZaUXQ',
+        {
+          email: email,
+          password: password,
+          returnSecureToken: true
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    if (!errorRes.error || !errorRes.error.error) {
+      return throwError(errorMessage);
+    }
+    switch (errorRes.error.error.message) {
+      case 'EMAIL_EXISTS':
+        errorMessage = 'The email address is already in use.';
+        break;
+      case 'EMAIL_NOT_FOUND': 
+        errorMessage = 'The email does not exist.';
+        break;
+      case 'INVALID_PASSWORD': 
+        errorMessage = 'The password is invalid.';
+        break;
+    }
+    return throwError(errorMessage);
   }
 }
