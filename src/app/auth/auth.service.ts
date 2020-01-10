@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 
-interface AuthResponseData {
+export interface AuthResponseData {
   kind: string,
   idToken: string,
   email: string,
   refreshToken:	string,
   expiresIn: string,
-  localId: string
+  localId: string,
+  registered?: boolean
 }
 
 @Injectable({
@@ -38,5 +39,16 @@ export class AuthService {
       }
       return throwError(errorMessage);
     }));
+  }
+
+  login(email: string, password: string): Observable<AuthResponseData>{
+    return this.http.post<AuthResponseData>(
+      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCdsXeBkkKcpXmNQRHoui2L97xt1BZaUXQ',
+      {
+        email: email,
+        password: password,
+        returnSecureToken: true
+      }
+    );
   }
 }
