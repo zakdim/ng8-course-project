@@ -1,6 +1,6 @@
 # Ng8CourseProject
 
-*NOTE*: also see [Bitbucket angular-complete-guide](https://bitbucket.org/zakdim/workspace/projects/AN_2)
+**NOTE**: see [Bitbucket angular-complete-guide](https://bitbucket.org/zakdim/workspace/projects/AN_2) for the latest repos.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
 
